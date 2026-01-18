@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibro Messenger</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="container">
+
+  <!-- ===== AUTH ===== -->
+  <div id="auth">
+    <div id="step1">
+      <h2>Введите имя пользователя</h2>
+      <input type="text" id="username" placeholder="Имя пользователя">
+      <button id="next1" class="purple-btn">Далее</button>
+    </div>
+    <div id="step2" style="display:none;">
+      <h2>Введите пароль</h2>
+      <input type="password" id="password" placeholder="Пароль">
+      <button id="next2" class="purple-btn">Подтвердить</button>
+    </div>
+  </div>
+
+  <!-- ===== MAIN MENU ===== -->
+  <div id="main" style="display:none;">
+    <div id="sidebar">
+      <button id="profile-btn">Профиль</button>
+      <input type="text" id="search" placeholder="Поиск пользователей...">
+      <div id="users-list"></div>
+      <div id="groups-list"></div>
+      <button id="create-group-btn" class="purple-btn">Создать группу</button>
+    </div>
+    <div id="chat-window">
+      <div id="messages"></div>
+      <input type="text" id="msg-input" placeholder="Написать сообщение...">
+      <button id="send-msg" class="purple-btn">Отправить</button>
+    </div>
+  </div>
+
+  <!-- ===== PROFILE ===== -->
+  <div id="profile" style="display:none;">
+    <h2>Профиль</h2>
+    <img id="profile-img" src="" alt="Аватар" style="width:80px;height:80px;border-radius:50%;margin-bottom:10px;">
+    <input type="text" id="profile-username" placeholder="Никнейм">
+    <input type="text" id="profile-avatar" placeholder="Ссылка на аватар">
+    <button id="save-profile" class="purple-btn">Сохранить</button>
+  </div>
+
+</div>
+<script src="/static/script.js"></script>
+</body>
+</html>
