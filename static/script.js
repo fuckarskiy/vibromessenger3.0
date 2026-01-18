@@ -1,4 +1,5 @@
 let currentUser = "";
+let currentUserId = null;
 
 // STEP 1 → STEP 2
 document.getElementById("nextBtn").onclick = () => {
@@ -35,10 +36,71 @@ document.getElementById("confirmBtn").onclick = async () => {
   if(data.ok){
     document.getElementById("step2").classList.remove("active");
     document.getElementById("chatMenu").classList.add("active");
-    loadProfile();
+    afterLogin();
   } else {
     alert("Неверные данные");
   }
+}
+
+// После логина
+async function afterLogin(){
+  // Загружаем профиль
+  const r = await fetch("/profile");
+  const d = await r.json();
+  currentUserId = d.username; // у тебя session по username
+  document.getElementById("userLabel").innerText = d.username;
+  document.getElementById("avatar").src = d.avatar || "static/avatars/default.png";
+
+  loadUsers();
+}
+
+// Загружаем пользователей для селекта
+async function loadUsers(){
+  const r = await fetch("/search?q=");
+  const users = await r.json();
+  const sel = document.getElementById("userSelect");
+  sel.innerHTML = <option value="">Выберите пользователя</option>;
+  users.forEach(u => {
+    if(u !== currentUser){
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      sel.appendChild(opt);
+    }
+  });
+}
+
+// Отправка DM
+document.getElementById("sendBtn").onclick = async () => {
+  const msg = document.getElementById("msgInput").value.trim();
+  const to = document.getElementById("userSelect").value;
+  if(!msg || !to){ alert("Выберите пользователя и напишите сообщение"); return; }
+
+  const r = await fetch("/dm/send", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({to:to,text:msg})
+  });
+  const d = await r.json();
+  if(d.ok){
+    document.getElementById("msgInput").value = "";
+    loadDM(to);
+  }
+}
+
+// Загрузка истории сообщений
+async function loadDM(to){
+  if(!to) return;
+  const r = await fetch(`/dm/history?with=${to}`);
+  const messages = await r.json();
+  const msgDiv = document.getElementById("messages");
+  msgDiv.innerHTML = "";
+  messages.forEach(m => {
+    const div = document.createElement("div");
+    div.textContent = ${m.sender==currentUser ? "Вы" : m.sender}: ${m.text};
+    div.className = m.sender==currentUser ? "me" : "other";
+    msgDiv.appendChild(div);
+  });
 }
 
 // Профиль
@@ -51,14 +113,6 @@ document.getElementById("profileBtn").onclick = () => {
 document.getElementById("backChat").onclick = () => {
   document.getElementById("profileMenu").classList.remove("active");
   document.getElementById("chatMenu").classList.add("active");
-}
-
-// Загрузка профиля
-async function loadProfile(){
-  const r = await fetch("/profile");
-  const d = await r.json();
-  document.getElementById("userLabel").innerText = d.username;
-  document.getElementById("avatar").src = d.avatar || "static/avatars/default.png";
 }
 
 // Загрузка аватарки
