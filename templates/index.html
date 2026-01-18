@@ -23,18 +23,25 @@
     <button id="confirmBtn">Подтвердить</button>
   </div>
 
-  <!-- CHAT MENU -->
+  <!-- STEP 3: Чат -->
   <div id="chatMenu" class="step">
     <div id="chatHeader">
       <span>Чат</span>
       <button id="profileBtn">Профиль</button>
     </div>
+
+    <!-- Выбор пользователя для личного сообщения -->
+    <select id="userSelect">
+      <option value="">Выберите пользователя</option>
+    </select>
+
+    <!-- Сообщения -->
     <div id="messages"></div>
     <input id="msgInput" placeholder="Написать сообщение">
     <button id="sendBtn">Отправить</button>
   </div>
 
-  <!-- PROFILE MENU -->
+  <!-- STEP 4: Профиль -->
   <div id="profileMenu" class="step">
     <h2>Профиль</h2>
     <img id="avatar" src="static/avatars/default.png">
