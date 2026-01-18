@@ -1,76 +1,54 @@
-let userId, username, avatar;
+let step = 1;
+let currentUser = "";
 
-// ===== AUTH STEP1 =====
-document.getElementById("next1").onclick = async()=>{
-  let name=document.getElementById("username").value;
-  localStorage.setItem("temp_username",name);
-  document.getElementById("step1").style.display="none";
-  document.getElementById("step2").style.display="block";
-};
-
-// ===== AUTH STEP2 =====
-document.getElementById("next2").onclick = async()=>{
-  let name=localStorage.getItem("temp_username");
-  let pwd=document.getElementById("password").value;
-  let res=await fetch("/register_step2",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:name,password:pwd})});
-  if(!res.ok) res=await fetch("/login_step2",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:name,password:pwd})});
-  let data=await res.json();
-  if(data.error) return alert("Ошибка регистрации/логина");
-  userId=data.user_id; username=data.username; avatar=data.avatar;
-  showMain();
-};
-
-// ===== SHOW MAIN =====
-function showMain(){
-  document.getElementById("auth").style.display="none";
-  document.getElementById("main").style.display="flex";
-  loadUsers();
-  loadGroups();
+document.getElementById("nextBtn").onclick = () => {
+  const u = document.getElementById("username").value.trim();
+  if(!u){ alert("Введите имя"); return; }
+  currentUser = u;
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
 }
 
-// ===== LOAD USERS =====
-async function loadUsers(){
-  let res=await fetch("/search?q=");
-  let users=await res.json();
-  let ul=document.getElementById("users-list"); ul.innerHTML="";
-  users.forEach(u=>{let b=document.createElement("button");b.textContent=u.username;ul.appendChild(b);});
+document.getElementById("confirmBtn").onclick = async () => {
+  const p = document.getElementById("password").value.trim();
+  if(!p){ alert("Введите пароль"); return; }
+
+  // регистрация
+  let res = await fetch("/register",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({username:currentUser,password:p})});
+  let data = await res.json();
+  if(data.error){
+    // логин
+    res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({username:currentUser,password:p})});
+    data = await res.json();
+  }
+  if(data.ok){
+    document.getElementById("auth").classList.add("hidden");
+    document.getElementById("main").classList.remove("hidden");
+    loadProfile();
+  } else { alert("Неверные данные"); }
 }
 
-// ===== LOAD GROUPS =====
-async function loadGroups(){
-  let gl=document.getElementById("groups-list"); gl.innerHTML="";
-  document.getElementById("create-group-btn").onclick=async()=>{
-    let gname=prompt("Название группы:");
-    if(!gname) return;
-    await fetch("/group/create",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:gname,owner:userId})});
-    loadGroups();
-  };
+// Загрузка профиля
+async function loadProfile(){
+  const r = await fetch("/profile");
+  const d = await r.json();
+  document.getElementById("userLabel").innerText = d.username;
+  document.getElementById("avatar").src = d.avatar || "static/avatars/default.png";
 }
 
-// ===== SEND MESSAGE =====
-document.getElementById("send-msg").onclick=async()=>{
-  let msg=document.getElementById("msg-input").value;
-  if(!msg) return;
-  await fetch("/dm/send",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({from:userId,to:userId,msg:msg})});
-  document.getElementById("messages").innerHTML+="<div>"+msg+"</div>";
-  document.getElementById("msg-input").value="";
+// Гамбургер меню
+document.getElementById("menuBtn").onclick = () => {
+  const sb = document.getElementById("sidebar");
+  sb.classList.toggle("hidden");
 }
 
-// ===== PROFILE =====
-document.getElementById("profile-btn").onclick=()=>{
-  document.getElementById("main").style.display="none";
-  document.getElementById("profile").style.display="block";
-  document.getElementById("profile-username").value=username;
-  document.getElementById("profile-avatar").value=avatar || "";
-  document.getElementById("profile-img").src=avatar || "";
-};
-
-document.getElementById("save-profile").onclick=async()=>{
-  let uname=document.getElementById("profile-username").value;
-  let avat=document.getElementById("profile-avatar").value;
-  await fetch("/profile/update",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:userId,username:uname,avatar:avat})});
-  username=uname; avatar=avat;
-  document.getElementById("profile-img").src=avatar;
-  document.getElementById("profile").style.display="none";
-  document.getElementById("main").style.display="flex";
-};
+// Обновление аватарки
+document.getElementById("updateAvatar").onclick = async () => {
+  const f = document.getElementById("avatarFile").files[0];
+  if(!f){ alert("Выберите файл"); return; }
+  const form = new FormData();
+  form.append("avatar", f);
+  const r = await fetch("/profile/avatar",{method:"POST",body:form});
+  const d = await r.json();
+  if(d.ok){ document.getElementById("avatar").src=d.avatar; }
+}
