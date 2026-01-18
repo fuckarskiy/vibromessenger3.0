@@ -4,51 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vibro Messenger</title>
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-<div id="container">
+<div class="container">
 
-  <!-- ===== AUTH ===== -->
+  <!-- Логин / Регистрация -->
   <div id="auth">
-    <div id="step1">
-      <h2>Введите имя пользователя</h2>
-      <input type="text" id="username" placeholder="Имя пользователя">
-      <button id="next1" class="purple-btn">Далее</button>
-    </div>
-    <div id="step2" style="display:none;">
-      <h2>Введите пароль</h2>
-      <input type="password" id="password" placeholder="Пароль">
-      <button id="next2" class="purple-btn">Подтвердить</button>
-    </div>
+    <h1>Vibro Messenger</h1>
+    <input id="username" placeholder="Имя пользователя">
+    <input id="password" type="password" placeholder="Пароль">
+    <button type="button" id="loginBtn">Подтвердить</button>
+    <button type="button" id="regBtn">Регистрация</button>
   </div>
 
-  <!-- ===== MAIN MENU ===== -->
-  <div id="main" style="display:none;">
+  <!-- Главное меню -->
+  <div id="main" class="hidden">
     <div id="sidebar">
-      <button id="profile-btn">Профиль</button>
-      <input type="text" id="search" placeholder="Поиск пользователей...">
-      <div id="users-list"></div>
-      <div id="groups-list"></div>
-      <button id="create-group-btn" class="purple-btn">Создать группу</button>
+      <div id="profileBox">
+        <img id="avatar" src="static/avatars/default.png">
+        <span id="userLabel"></span>
+        <input type="file" id="avatarFile">
+        <button id="updateAvatar">Загрузить аватар</button>
+      </div>
+      <input id="searchUser" placeholder="Поиск">
+      <div id="usersList"></div>
     </div>
-    <div id="chat-window">
+    <div id="chatBox">
+      <div id="chatHeader">Чат</div>
       <div id="messages"></div>
-      <input type="text" id="msg-input" placeholder="Написать сообщение...">
-      <button id="send-msg" class="purple-btn">Отправить</button>
+      <input id="msgInput" placeholder="Написать сообщение">
+      <button id="sendBtn">Отправить</button>
     </div>
-  </div>
-
-  <!-- ===== PROFILE ===== -->
-  <div id="profile" style="display:none;">
-    <h2>Профиль</h2>
-    <img id="profile-img" src="" alt="Аватар" style="width:80px;height:80px;border-radius:50%;margin-bottom:10px;">
-    <input type="text" id="profile-username" placeholder="Никнейм">
-    <input type="text" id="profile-avatar" placeholder="Ссылка на аватар">
-    <button id="save-profile" class="purple-btn">Сохранить</button>
   </div>
 
 </div>
-<script src="/static/script.js"></script>
+
+<script src="static/script.js"></script>
 </body>
 </html>
