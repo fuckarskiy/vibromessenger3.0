@@ -13,11 +13,9 @@ document.getElementById("confirmBtn").onclick = async () => {
   const p = document.getElementById("password").value.trim();
   if(!p){ alert("Введите пароль"); return; }
 
-  // регистрация
   let res = await fetch("/register",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({username:currentUser,password:p})});
   let data = await res.json();
   if(data.error){
-    // логин
     res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({username:currentUser,password:p})});
     data = await res.json();
   }
