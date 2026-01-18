@@ -1,26 +1,35 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibro Messenger</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
 
-  <!-- ===== AUTH STEP 1: Имя пользователя ===== -->
-  <div id="auth">
-    <div id="step1">
-      <h1>Vibro Messenger</h1>
-      <input id="username" placeholder="Имя пользователя">
-      <button id="nextBtn">Далее</button>
-    </div>
+<div id="root">
 
-    <!-- ===== AUTH STEP 2: Пароль ===== -->
-    <div id="step2" class="hidden">
-      <input id="password" type="password" placeholder="Пароль">
-      <button id="confirmBtn">Подтвердить</button>
-    </div>
+  <!-- Step 1: Имя / номер -->
+  <div id="step1" class="step active">
+    <h1>Vibro Messenger</h1>
+    <input id="username" placeholder="Введите имя или номер">
+    <button id="nextBtn">Далее</button>
   </div>
 
-  <!-- ===== MAIN MENU (Скрыт до логина) ===== -->
+  <!-- Step 2: Пароль -->
+  <div id="step2" class="step hidden">
+    <input id="password" type="password" placeholder="Введите пароль">
+    <button id="confirmBtn">Далее</button>
+  </div>
+
+  <!-- Главное меню -->
   <div id="main" class="hidden">
     <div id="topBar">
       <button id="menuBtn">&#9776;</button>
       <span>Vibro Messenger</span>
     </div>
+
     <div id="containerMain">
       <!-- Sidebar профиль/поиск -->
       <div id="sidebar" class="hidden">
@@ -45,3 +54,7 @@
   </div>
 
 </div>
+
+<script src="static/script.js"></script>
+</body>
+</html>
