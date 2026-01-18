@@ -9,37 +9,48 @@
 <body>
 <div class="container">
 
-  <!-- Логин / Регистрация -->
+  <!-- AUTH STEP 1 -->
   <div id="auth">
-    <h1>Vibro Messenger</h1>
-    <input id="username" placeholder="Имя пользователя">
-    <input id="password" type="password" placeholder="Пароль">
-    <button type="button" id="loginBtn">Подтвердить</button>
-    <button type="button" id="regBtn">Регистрация</button>
+    <div id="step1">
+      <h1>Vibro Messenger</h1>
+      <input id="username" placeholder="Имя пользователя">
+      <button type="button" id="nextBtn">Далее</button>
+    </div>
+
+    <!-- AUTH STEP 2 -->
+    <div id="step2" class="hidden">
+      <input id="password" type="password" placeholder="Пароль">
+      <button type="button" id="confirmBtn">Подтвердить</button>
+    </div>
   </div>
 
-  <!-- Главное меню -->
+  <!-- MAIN -->
   <div id="main" class="hidden">
-    <div id="sidebar">
-      <div id="profileBox">
-        <img id="avatar" src="static/avatars/default.png">
-        <span id="userLabel"></span>
-        <input type="file" id="avatarFile">
-        <button id="updateAvatar">Загрузить аватар</button>
-      </div>
-      <input id="searchUser" placeholder="Поиск">
-      <div id="usersList"></div>
+    <div id="topBar">
+      <button id="menuBtn">&#9776;</button>
+      <span>Vibro Messenger</span>
     </div>
-    <div id="chatBox">
-      <div id="chatHeader">Чат</div>
-      <div id="messages"></div>
-      <input id="msgInput" placeholder="Написать сообщение">
-      <button id="sendBtn">Отправить</button>
+    <div id="containerMain">
+      <div id="sidebar" class="hidden">
+        <div id="profileBox">
+          <img id="avatar" src="static/avatars/default.png">
+          <span id="userLabel"></span>
+          <input type="file" id="avatarFile">
+          <button id="updateAvatar">Загрузить аватар</button>
+        </div>
+        <input id="searchUser" placeholder="Поиск">
+        <div id="usersList"></div>
+      </div>
+      <div id="chatBox">
+        <div id="chatHeader">Чат</div>
+        <div id="messages"></div>
+        <input id="msgInput" placeholder="Написать сообщение">
+        <button id="sendBtn">Отправить</button>
+      </div>
     </div>
   </div>
 
 </div>
-
 <script src="static/script.js"></script>
 </body>
 </html>
