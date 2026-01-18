@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,47 +10,38 @@
 
 <div id="root">
 
-  <!-- Step 1: Имя / номер -->
+  <!-- STEP 1: Ввод имени -->
   <div id="step1" class="step active">
     <h1>Vibro Messenger</h1>
     <input id="username" placeholder="Введите имя или номер">
     <button id="nextBtn">Далее</button>
   </div>
 
-  <!-- Step 2: Пароль -->
-  <div id="step2" class="step hidden">
+  <!-- STEP 2: Ввод пароля -->
+  <div id="step2" class="step">
     <input id="password" type="password" placeholder="Введите пароль">
-    <button id="confirmBtn">Далее</button>
+    <button id="confirmBtn">Подтвердить</button>
   </div>
 
-  <!-- Главное меню -->
-  <div id="main" class="hidden">
-    <div id="topBar">
-      <button id="menuBtn">&#9776;</button>
-      <span>Vibro Messenger</span>
+  <!-- CHAT MENU -->
+  <div id="chatMenu" class="step">
+    <div id="chatHeader">
+      <span>Чат</span>
+      <button id="profileBtn">Профиль</button>
     </div>
+    <div id="messages"></div>
+    <input id="msgInput" placeholder="Написать сообщение">
+    <button id="sendBtn">Отправить</button>
+  </div>
 
-    <div id="containerMain">
-      <!-- Sidebar профиль/поиск -->
-      <div id="sidebar" class="hidden">
-        <div id="profileBox">
-          <img id="avatar" src="static/avatars/default.png">
-          <span id="userLabel"></span>
-          <input type="file" id="avatarFile">
-          <button id="updateAvatar">Загрузить аватар</button>
-        </div>
-        <input id="searchUser" placeholder="Поиск">
-        <div id="usersList"></div>
-      </div>
-
-      <!-- Chat box -->
-      <div id="chatBox">
-        <div id="chatHeader">Чат</div>
-        <div id="messages"></div>
-        <input id="msgInput" placeholder="Написать сообщение">
-        <button id="sendBtn">Отправить</button>
-      </div>
-    </div>
+  <!-- PROFILE MENU -->
+  <div id="profileMenu" class="step">
+    <h2>Профиль</h2>
+    <img id="avatar" src="static/avatars/default.png">
+    <span id="userLabel"></span>
+    <input type="file" id="avatarFile">
+    <button id="updateAvatar">Загрузить аватар</button>
+    <button id="backChat">Назад в чат</button>
   </div>
 
 </div>
